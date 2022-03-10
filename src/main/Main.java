@@ -3,19 +3,22 @@ package main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class Main {
 	private static HashMap<String, String> slangWords;
 	private static Scanner scanner;
+	private static Map<String, String> historySlangWords;
 
-	public static void initData() {
+	private static void initData() {
+		if (slangWords != null) {
+			slangWords.clear();
+		}
+		slangWords = new HashMap<>();
+		historySlangWords = new HashMap<>();
 		try {
-			if (slangWords != null) {
-				slangWords.clear();
-			}
-			slangWords = new HashMap<>();
 			Scanner sc = new Scanner(new File("slang.txt"));
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
@@ -28,7 +31,7 @@ public class Main {
 		}
 	}
 
-	public static Integer menuMain() {
+	private static Integer menuMain() {
 		System.out.println("--------------MENU----------- \n" + "1. Tìm kiếm theo slang word. \n"
 				+ "2. Tìm kiếm theo definition. \n" + "3. Hiển thị history, danh sách các slang word đã tìm kiếm. \n"
 				+ "4. Add 1 slang words mới. \n" + "5. Edit 1 slang word. \n" + "6. Delete 1 slang word. \n"
@@ -45,17 +48,72 @@ public class Main {
 		return choose;
 	}
 
-	public static void findSlangWord() {
+	private static void findSlangWord() {
 //		scanner.nextLine();
 		System.out.print("Nhập slang word muốn tìm kiếm: ");
 		scanner.nextLine();
 		String slangWord = scanner.nextLine();
 		String result = slangWords.get(slangWord);
-		if (result==null) {
+		if (result == null) {
 			System.out.println("Không có từ này!");
 		} else {
-			System.out.println("Với: " + slangWord + " => ý nghĩa: " + result);
+			historySlangWords.put(slangWord, result);
+			System.out.println("Ký tự: " + slangWord + " => ý nghĩa: " + result);
 		}
+	}
+
+	private static void viewHistorySlangWords() {
+		int stt = 1;
+		for (Entry<String, String> slangWord : historySlangWords.entrySet()) {
+
+			System.out.println(stt + ". Ký tự:" + slangWord.getKey() + " => ý nghĩa: " + slangWord.getValue());
+			stt++;
+		}
+		if (stt == 1) {
+			System.out.println("Lịch sử trống!");
+		}
+	}
+
+	private static void addNewSlangWords() {
+		scanner.nextLine();
+		System.out.print("Nhập slang word mới: ");
+		String slangWord = scanner.nextLine();
+		String value = slangWords.get(slangWord);
+		if (value != null) {
+			System.out.println("Slang word này đã có bạn muốn ghi đè lại chứ.");
+			System.out.println("1. Có");
+			System.out.println("2. Không");
+			System.out.print("Bạn chọn: ");
+			int choose = scanner.nextInt();
+			while (choose < 1 || choose > 2) {
+				System.out.print("Bạn đã nhập sai! Nhập lại!: ");
+				choose = scanner.nextInt();
+			}
+			if (choose == 2) {
+				return;
+			}
+		}
+		System.out.print("Nhập ý nghĩa của slang word đó: ");
+		value = scanner.nextLine();
+		slangWords.put(slangWord, value);
+
+		System.out.println("Đã thêm slang word mới");
+	}
+
+	private static void editSlandWord() {
+		scanner.nextLine();
+		System.out.print("Nhập slang word muốn chỉnh sửa: ");
+		String slangWord = scanner.nextLine();
+		String value = slangWords.get(slangWord);
+		if (slangWord == null) {
+			System.out.println("Không có slang word này!");
+			return;
+		}
+		System.out.println(". Ký tự:" + slangWord + " => ý nghĩa: " + value);
+		System.out.print("Nhập ý nghĩa mới: ");
+		String newValue = scanner.nextLine();
+		slangWords.replace(slangWord, newValue);
+		System.out.println("Slang word đã được cập nhập!");
 	}
 
 	public static void main(String[] args) {
@@ -73,12 +131,15 @@ public class Main {
 				break;
 			}
 			case 3: {
+				viewHistorySlangWords();
 				break;
 			}
 			case 4: {
+				addNewSlangWords();
 				break;
 			}
 			case 5: {
+				editSlandWord();
 				break;
 			}
 			case 6: {
