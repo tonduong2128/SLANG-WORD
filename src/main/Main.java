@@ -100,12 +100,12 @@ public class Main {
 		System.out.println("Đã thêm slang word mới");
 	}
 
-	private static void editSlandWord() {
+	private static void editSlangWord() {
 		scanner.nextLine();
 		System.out.print("Nhập slang word muốn chỉnh sửa: ");
 		String slangWord = scanner.nextLine();
 		String value = slangWords.get(slangWord);
-		if (slangWord == null) {
+		if (value == null) {
 			System.out.println("Không có slang word này!");
 			return;
 		}
@@ -114,6 +114,31 @@ public class Main {
 		String newValue = scanner.nextLine();
 		slangWords.replace(slangWord, newValue);
 		System.out.println("Slang word đã được cập nhập!");
+	}
+
+	private static void deleteSlangWord() {
+		scanner.nextLine();
+		System.out.print("Nhập slang word muốn chỉnh sửa: ");
+		String slangWord = scanner.nextLine();
+		String value = slangWords.get(slangWord);
+		if (value == null) {
+			System.out.println("Không có slang word này!");
+			return;
+		}
+		System.out.println("Bạn chắc chắng muốn xóa slang word này chứ");
+		System.out.println("1. Có");
+		System.out.println("2. Không");
+		System.out.print("Bạn chọn: ");
+		int choose = scanner.nextInt();
+		while (choose < 1 || choose > 2) {
+			System.out.print("Bạn đã nhập sai! Nhập lại!: ");
+			choose = scanner.nextInt();
+		}
+		if (choose == 2) {
+			return;
+		}
+		slangWords.remove(slangWord);
+		System.out.println("Đã xóa slang word trên");
 	}
 
 	public static void main(String[] args) {
@@ -139,10 +164,11 @@ public class Main {
 				break;
 			}
 			case 5: {
-				editSlandWord();
+				editSlangWord();
 				break;
 			}
 			case 6: {
+				deleteSlangWord();
 				break;
 			}
 			case 7: {
