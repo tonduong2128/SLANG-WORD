@@ -32,17 +32,17 @@ public class Main {
 	}
 
 	private static Integer menuMain() {
-		System.out.println("--------------MENU----------- \n" + "1. Tìm kiếm theo slang word. \n"
-				+ "2. Tìm kiếm theo definition. \n" + "3. Hiển thị history, danh sách các slang word đã tìm kiếm. \n"
-				+ "4. Add 1 slang words mới. \n" + "5. Edit 1 slang word. \n" + "6. Delete 1 slang word. \n"
-				+ "7. Reset về danh sách slang words gốc. \n" + "8. Random 1 slang word. \n"
-				+ "9. Đố vui random slang word.\n" + "10. Đố vui với definition. \n" + "0. Thoát");
+		System.out.println("--------------MENU----------- \n" + "1. Tim kiem theo slang word. \n"
+				+ "2. Tim kiem theo definition. \n" + "3. Hien thi history, danh sach cac slang word da tim kiem. \n"
+				+ "4. Add 1 slang words moi. \n" + "5. Edit 1 slang word. \n" + "6. Delete 1 slang word. \n"
+				+ "7. Reset ve danh sach slang words goc. \n" + "8. Random 1 slang word. \n"
+				+ "9. Do vui random slang word.\n" + "10. Do vui voi definition. \n" + "0. Thoat");
 		Integer choose;
-		System.out.print("Bạn chọn: ");
+		System.out.print("Ban chon: ");
 
 		choose = scanner.nextInt();
 		while (choose < 0 || choose > 10) {
-			System.out.print("Chọn sai! Mời bạn chọn lại: ");
+			System.out.print("Chon sai! Moi ban chon lai: ");
 			choose = scanner.nextInt();
 		}
 		return choose;
@@ -50,15 +50,15 @@ public class Main {
 
 	private static void findSlangWord() {
 //		scanner.nextLine();
-		System.out.print("Nhập slang word muốn tìm kiếm: ");
+		System.out.print("Nhap slang word muon tim kiem: ");
 		scanner.nextLine();
 		String slangWord = scanner.nextLine();
 		String result = slangWords.get(slangWord);
 		if (result == null) {
-			System.out.println("Không có từ này!");
+			System.out.println("Khong co slang word nay!");
 		} else {
 			historySlangWords.put(slangWord, result);
-			System.out.println("Ký tự: " + slangWord + " => ý nghĩa: " + result);
+			System.out.println("Ky tu: " + slangWord + " => y nghia: " + result);
 		}
 	}
 
@@ -66,79 +66,98 @@ public class Main {
 		int stt = 1;
 		for (Entry<String, String> slangWord : historySlangWords.entrySet()) {
 
-			System.out.println(stt + ". Ký tự:" + slangWord.getKey() + " => ý nghĩa: " + slangWord.getValue());
+			System.out.println(stt + ". Ky tu:" + slangWord.getKey() + " => y nghia: " + slangWord.getValue());
 			stt++;
 		}
 		if (stt == 1) {
-			System.out.println("Lịch sử trống!");
+			System.out.println("Lich su trong!");
 		}
 	}
 
 	private static void addNewSlangWords() {
 		scanner.nextLine();
-		System.out.print("Nhập slang word mới: ");
+		System.out.print("Nhap slang word moi: ");
 		String slangWord = scanner.nextLine();
 		String value = slangWords.get(slangWord);
 		if (value != null) {
-			System.out.println("Slang word này đã có bạn muốn ghi đè lại chứ.");
-			System.out.println("1. Có");
-			System.out.println("2. Không");
-			System.out.print("Bạn chọn: ");
+			System.out.println("Slang word nay da co roi ban muon ghi de lai chu.");
+			System.out.println("1. Co");
+			System.out.println("2. Khong");
+			System.out.print("Ban chon: ");
 			int choose = scanner.nextInt();
 			while (choose < 1 || choose > 2) {
-				System.out.print("Bạn đã nhập sai! Nhập lại!: ");
+				System.out.print("Ban da nhap sai! Nhap lai!: ");
 				choose = scanner.nextInt();
 			}
 			if (choose == 2) {
 				return;
 			}
 		}
-		System.out.print("Nhập ý nghĩa của slang word đó: ");
+		System.out.print("Nhap y nghia cua slang word do: ");
 		value = scanner.nextLine();
 		slangWords.put(slangWord, value);
 
-		System.out.println("Đã thêm slang word mới");
+		System.out.println("Da them slang word moi!");
 	}
 
 	private static void editSlangWord() {
 		scanner.nextLine();
-		System.out.print("Nhập slang word muốn chỉnh sửa: ");
+		System.out.print("Nhap slang word muon chinh sua: ");
 		String slangWord = scanner.nextLine();
 		String value = slangWords.get(slangWord);
 		if (value == null) {
-			System.out.println("Không có slang word này!");
+			System.out.println("Khong co slang word nay!");
 			return;
 		}
-		System.out.println(". Ký tự:" + slangWord + " => ý nghĩa: " + value);
-		System.out.print("Nhập ý nghĩa mới: ");
-		String newValue = scanner.nextLine();
-		slangWords.replace(slangWord, newValue);
-		System.out.println("Slang word đã được cập nhập!");
+		System.out.println("Ky tu:" + slangWord + " => y nghia: " + value);
+		System.out.println("Ban muon chinh sua:");
+		System.out.println("1. Ky tu");
+		System.out.println("2. Y nghia");
+		System.out.print(" Ban chon:");
+		int choose = scanner.nextInt();
+		while (choose < 1 || choose > 2) {
+			System.out.print("Ban da nhap sai! Nhap lai!: ");
+			choose = scanner.nextInt();
+		}
+		scanner.nextLine();
+		if (choose == 1) {
+			System.out.print("Nhap ky tu moi: ");
+			String newKey = scanner.nextLine();
+			slangWords.put(newKey, slangWords.remove(slangWord));
+
+		} else {
+			System.out.print("Nhap y nghia moi: ");
+			String newValue = scanner.nextLine();
+			slangWords.replace(slangWord, newValue);
+
+		}
+		System.out.println("Slang word da duoc cap nhap!");
 	}
 
 	private static void deleteSlangWord() {
 		scanner.nextLine();
-		System.out.print("Nhập slang word muốn chỉnh sửa: ");
+		System.out.print("Nhap slang word muon chinh sua: ");
 		String slangWord = scanner.nextLine();
 		String value = slangWords.get(slangWord);
 		if (value == null) {
-			System.out.println("Không có slang word này!");
+			System.out.println("Khong co slang word nay!");
 			return;
 		}
-		System.out.println("Bạn chắc chắng muốn xóa slang word này chứ");
-		System.out.println("1. Có");
-		System.out.println("2. Không");
-		System.out.print("Bạn chọn: ");
+		System.out.println("Ky tu:" + slangWord + " => y nghia: " + value);
+		System.out.println("Ban co chac muon xoa slang word nay chu.");
+		System.out.println("1. Co");
+		System.out.println("2. Khong");
+		System.out.print("Ban chon: ");
 		int choose = scanner.nextInt();
 		while (choose < 1 || choose > 2) {
-			System.out.print("Bạn đã nhập sai! Nhập lại!: ");
+			System.out.print("Ban da nhap sai! Nhap lai!: ");
 			choose = scanner.nextInt();
 		}
 		if (choose == 2) {
 			return;
 		}
 		slangWords.remove(slangWord);
-		System.out.println("Đã xóa slang word trên");
+		System.out.println("Da xoa slang word nay");
 	}
 
 	public static void main(String[] args) {
@@ -150,6 +169,8 @@ public class Main {
 			switch (choose) {
 			case 1: {
 				findSlangWord();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
 				break;
 			}
 			case 2: {
@@ -157,18 +178,28 @@ public class Main {
 			}
 			case 3: {
 				viewHistorySlangWords();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
+				scanner.nextLine();
 				break;
 			}
 			case 4: {
 				addNewSlangWords();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
 				break;
 			}
 			case 5: {
 				editSlangWord();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
 				break;
 			}
 			case 6: {
 				deleteSlangWord();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
+				scanner.nextLine();
 				break;
 			}
 			case 7: {
