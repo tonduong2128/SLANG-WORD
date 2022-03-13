@@ -2,8 +2,11 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
@@ -11,6 +14,7 @@ public class Main {
 	private static HashMap<String, String> slangWords;
 	private static Scanner scanner;
 	private static Map<String, String> historySlangWords;
+	private static List<String> keySlangWords ;
 
 	private static void initData() {
 		if (slangWords != null) {
@@ -18,6 +22,7 @@ public class Main {
 		}
 		slangWords = new HashMap<>();
 		historySlangWords = new HashMap<>();
+		keySlangWords = new ArrayList<>();
 		try {
 			Scanner sc = new Scanner(new File("slang.txt"));
 			while (sc.hasNextLine()) {
@@ -160,6 +165,15 @@ public class Main {
 		System.out.println("Da xoa slang word nay");
 	}
 
+	private static void revertSlangWords() {
+		initData();
+	}
+	private Entry<String, String> getRandomSlangWord() {
+		return null;
+	}
+	private static void randomSlangWord() {
+		
+	}
 	public static void main(String[] args) {
 		initData();
 		scanner = new Scanner(System.in);
@@ -203,9 +217,17 @@ public class Main {
 				break;
 			}
 			case 7: {
+				revertSlangWords();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
+				scanner.nextLine();
 				break;
 			}
 			case 8: {
+				randomSlangWord();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
+				scanner.nextLine();
 				break;
 			}
 			case 9: {
