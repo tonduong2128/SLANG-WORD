@@ -14,7 +14,6 @@ public class Main {
 	private static HashMap<String, String> slangWords;
 	private static Scanner scanner;
 	private static Map<String, String> historySlangWords;
-	private static List<String> keySlangWords;
 
 	private static void initData() {
 		if (slangWords != null) {
@@ -22,7 +21,6 @@ public class Main {
 		}
 		slangWords = new HashMap<>();
 		historySlangWords = new HashMap<>();
-		keySlangWords = new ArrayList<>();
 		try {
 			Scanner sc = new Scanner(new File("slang.txt"));
 			while (sc.hasNextLine()) {
@@ -170,6 +168,7 @@ public class Main {
 	}
 
 	private static String getRandomKeySlangWord() {
+		// Phan tham khao tren mang
 		Object[] crunchifyKeys = slangWords.keySet().toArray();
 		return crunchifyKeys[new Random().nextInt(crunchifyKeys.length)].toString();
 	}
@@ -247,6 +246,22 @@ public class Main {
 		}
 	}
 
+	public static void findSlangWordWithDefinition() {
+		System.out.print("Nhap y nghia ma ban muon tim kiem: ");
+		scanner.nextLine();
+		String value = scanner.nextLine();
+		int index = 1;
+		for (Entry<String, String> slangWord : slangWords.entrySet()) {
+			if (slangWord.getValue().contains(value)) {
+				System.out.println(index + ". Ky tu: " + slangWord.getKey() + " => y nghia:" + slangWord.getValue());
+				index++;
+			}
+		}
+		if (index == 1) {
+			System.out.println("Khong co slang word nao co y nghia gan nhu vay:");
+		}
+	}
+
 	public static void main(String[] args) {
 		initData();
 		scanner = new Scanner(System.in);
@@ -261,6 +276,9 @@ public class Main {
 				break;
 			}
 			case 2: {
+				findSlangWordWithDefinition();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
 				break;
 			}
 			case 3: {
