@@ -14,7 +14,7 @@ public class Main {
 	private static HashMap<String, String> slangWords;
 	private static Scanner scanner;
 	private static Map<String, String> historySlangWords;
-	private static List<String> keySlangWords ;
+	private static List<String> keySlangWords;
 
 	private static void initData() {
 		if (slangWords != null) {
@@ -168,12 +168,85 @@ public class Main {
 	private static void revertSlangWords() {
 		initData();
 	}
-	private Entry<String, String> getRandomSlangWord() {
-		return null;
+
+	private static String getRandomKeySlangWord() {
+		Object[] crunchifyKeys = slangWords.keySet().toArray();
+		return crunchifyKeys[new Random().nextInt(crunchifyKeys.length)].toString();
 	}
-	private static void randomSlangWord() {
-		
+
+	private static void funnyQuestionWithKey() {
+		System.out.println("Chon mot trong 4 dap an");
+		String keyResult = getRandomKeySlangWord();
+		String valueResult = slangWords.get(keyResult);
+		int result = new Random().nextInt(4);
+		System.out.println("Voi slang word: " + keyResult);
+		System.out.println(valueResult);
+		int index = 1;
+		for (int i = 0; i < 3; i++) {
+			if (i == result) {
+				System.out.println(" " + index + ". " + valueResult);
+				index++;
+				result += 4;
+			}
+			String key = getRandomKeySlangWord();
+			String value = slangWords.get(key);
+			System.out.println(" " + index + ". " + value);
+			index++;
+		}
+		if (result < 4) {
+			System.out.println(" " + index + ". " + valueResult);
+		}
+
+		System.out.println("Ban chon: ");
+		int choose = scanner.nextInt();
+		while (choose < 0 || choose > 4) {
+			System.out.print("Ban da nhap sai! Nhap lai!: ");
+			choose = scanner.nextInt();
+		}
+		System.out.println("Dap an la: " + valueResult);
+		if (choose == result + 1 - 4) {
+			System.out.println("Chung mung ban da chon dung!!!");
+		} else {
+			System.out.println("Ban da chon sai mat roi!!!");
+		}
 	}
+
+	private static void funnyQuestionWithValue() {
+		System.out.println("Chon mot trong 4 dap an");
+		String keyResult = getRandomKeySlangWord();
+		String valueResult = slangWords.get(keyResult);
+		int result = new Random().nextInt(4);
+		System.out.println("Voi y nghia slang word: " + valueResult);
+		System.out.println(keyResult);
+		int index = 1;
+		for (int i = 0; i < 3; i++) {
+			if (i == result) {
+				System.out.println(" " + index + ". " + keyResult);
+				index++;
+				result += 4;
+			}
+			String key = getRandomKeySlangWord();
+			System.out.println(" " + index + ". " + key);
+			index++;
+		}
+		if (result < 4) {
+			System.out.println(" " + index + ". " + keyResult);
+		}
+
+		System.out.println("Ban chon: ");
+		int choose = scanner.nextInt();
+		while (choose < 0 || choose > 4) {
+			System.out.print("Ban da nhap sai! Nhap lai!: ");
+			choose = scanner.nextInt();
+		}
+		System.out.println("Dap an la: " + keyResult);
+		if (choose == result + 1 - 4) {
+			System.out.println("Chung mung ban da chon dung!!!");
+		} else {
+			System.out.println("Ban da chon sai mat roi!!!");
+		}
+	}
+
 	public static void main(String[] args) {
 		initData();
 		scanner = new Scanner(System.in);
@@ -224,16 +297,27 @@ public class Main {
 				break;
 			}
 			case 8: {
-				randomSlangWord();
+				System.out.println("----RANDOM SLANGWORDS----");
+				String key = getRandomKeySlangWord();
+				String value = slangWords.get(key);
+				System.out.println("Ky tu:" + key + " => y nghia: " + value);
 				System.out.println("Nhan phim Enter de tiep tuc!");
 				scanner.nextLine();
 				scanner.nextLine();
 				break;
 			}
 			case 9: {
+				funnyQuestionWithKey();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
+				scanner.nextLine();
 				break;
 			}
 			case 10: {
+				funnyQuestionWithValue();
+				System.out.println("Nhan phim Enter de tiep tuc!");
+				scanner.nextLine();
+				scanner.nextLine();
 				break;
 			}
 			case 0: {
