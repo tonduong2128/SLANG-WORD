@@ -2,12 +2,11 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -15,14 +14,14 @@ public class Main {
 	private static Scanner scanner;
 	private static Map<String, String> historySlangWords;
 
-	private static void initData() {
+	private static void initData(String name) {
 		if (slangWords != null) {
 			slangWords.clear();
 		}
 		slangWords = new HashMap<>();
 		historySlangWords = new HashMap<>();
 		try {
-			Scanner sc = new Scanner(new File("slang.txt"));
+			Scanner sc = new Scanner(new File(name));
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				int indexSeparate = line.indexOf("`");
@@ -32,6 +31,18 @@ public class Main {
 			}
 		} catch (FileNotFoundException e) {
 		}
+	}
+
+	private static void writeData(String name) {
+		try {
+			PrintWriter printWriter = new PrintWriter(new File(name));
+			for (Entry<String, String> slangWord : slangWords.entrySet()) {
+				printWriter.write(slangWord.getKey() + "`" + slangWord.getValue() + '\n');
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Co loi say ra khi ghi du lieu xuong!!!");
+		}
+
 	}
 
 	private static Integer menuMain() {
@@ -164,7 +175,7 @@ public class Main {
 	}
 
 	private static void revertSlangWords() {
-		initData();
+		initData("slang-packup.txt");
 	}
 
 	private static String getRandomKeySlangWord() {
@@ -179,7 +190,6 @@ public class Main {
 		String valueResult = slangWords.get(keyResult);
 		int result = new Random().nextInt(4);
 		System.out.println("Voi slang word: " + keyResult);
-		System.out.println(valueResult);
 		int index = 1;
 		for (int i = 0; i < 3; i++) {
 			if (i == result) {
@@ -216,7 +226,6 @@ public class Main {
 		String valueResult = slangWords.get(keyResult);
 		int result = new Random().nextInt(4);
 		System.out.println("Voi y nghia slang word: " + valueResult);
-		System.out.println(keyResult);
 		int index = 1;
 		for (int i = 0; i < 3; i++) {
 			if (i == result) {
@@ -263,7 +272,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		initData();
+		initData("slang.txt");
 		scanner = new Scanner(System.in);
 		int choose = -1;
 		while (choose != 0) {
@@ -339,11 +348,13 @@ public class Main {
 				break;
 			}
 			case 0: {
+				System.out.println("Chuong trinh da dung!!!");
 				break;
 			}
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + choose);
 			}
+			writeData("slang.txt");
 		}
 	}
 }
