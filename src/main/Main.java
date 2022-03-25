@@ -63,7 +63,6 @@ public class Main {
 	}
 
 	private static void findSlangWord() {
-//		scanner.nextLine();
 		System.out.print("Nhap slang word muon tim kiem: ");
 		scanner.nextLine();
 		String slangWord = scanner.nextLine();
@@ -179,7 +178,7 @@ public class Main {
 	}
 
 	private static String getRandomKeySlangWord() {
-		// Phan tham khao tren mang
+		// Phan tham khao tren mang, 1%
 		Object[] crunchifyKeys = slangWords.keySet().toArray();
 		return crunchifyKeys[new Random().nextInt(crunchifyKeys.length)].toString();
 	}
